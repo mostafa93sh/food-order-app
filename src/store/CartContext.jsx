@@ -28,6 +28,26 @@ function cartReducer(state, action) {
     }
   } else if (action.type === "REMOVE_ITEM") {
     // Remove item logic
+    const existingCartItemIndex = state.items.findIndex(
+      (item) => item.id === action.items.id
+    );
+    const existingCartItem = state.items[existingCartItemIndex];
+    if (existingCartItem.quantity === 1) {
+      const updatedItems = state.items.filter(
+        (item) => item.id !== action.items.id
+      );
+    } else {
+      const updatedItem = {
+        ...existingCartItem,
+        quantity: existingCartItem.quantity - 1,
+      };
+      const updatedItems = [...state.items];
+      updatedItems[existingCartItemIndex] = updatedItem;
+      return {
+        ...state,
+        items: updatedItems,
+      };
+    }
   }
 
   return state;
