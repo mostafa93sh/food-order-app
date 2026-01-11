@@ -7,13 +7,16 @@ export const CartContext = createContext({
 });
 
 function cartReducer(state, action) {
+  //   console.log(action);
   if (action.type === "ADD_ITEM") {
+    // console.log("second");
     // Add item logic
     const existingCartItemIndex = state.items.findIndex(
       (item) => item.id === action.item.id
     );
     if (existingCartItemIndex > -1) {
       // Item already exists in cart
+
       const existingCartItem = state.items[existingCartItemIndex];
       const updatedItem = {
         ...existingCartItem,
@@ -24,6 +27,13 @@ function cartReducer(state, action) {
       return {
         ...state,
         items: updatedItems,
+      };
+    } else {
+      // Item does not exist in cart
+      const newItem = { ...action.item, quantity: 1 };
+      return {
+        ...state,
+        items: [...state.items, newItem],
       };
     }
   } else if (action.type === "REMOVE_ITEM") {
@@ -69,6 +79,8 @@ export function CartContextProvider({ children }) {
       dispatch({ type: "REMOVE_ITEM", id: id });
     },
   };
+
+  console.log(cartContext.items);
 
   return (
     <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
