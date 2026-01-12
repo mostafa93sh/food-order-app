@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-function Modal({ children, isOpen, className = "" }) {
+function Modal({ children, isOpen, className = "", onClose }) {
   const dialogRef = React.useRef(null);
   useEffect(() => {
     if (isOpen) {
@@ -10,7 +10,7 @@ function Modal({ children, isOpen, className = "" }) {
     }
   }, [isOpen]);
   return (
-    <dialog ref={dialogRef} className={`modal ${className}`}>
+    <dialog ref={dialogRef} className={`modal ${className}`} onClose={onClose}>
       {children}
     </dialog>
   );
