@@ -13,10 +13,6 @@ function Cart() {
     0
   );
 
-  function handleCheckout() {
-    progressCtx.showCheckout();
-  }
-
   return (
     <Modal
       isOpen={progressCtx.progress === "cart"}
