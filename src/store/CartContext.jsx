@@ -80,7 +80,7 @@ export function CartContextProvider({ children }) {
     },
   };
 
-  console.log(cartContext.items);
+  // console.log(cartContext.items);
 
   return (
     <CartContext.Provider value={cartContext}>{children}</CartContext.Provider>
