@@ -3,6 +3,7 @@ import Modal from "./UI/Modal";
 import { CartContext } from "../store/CartContext";
 import Button from "./UI/Button";
 import UserProgressContext from "../store/UserProgressContext";
+import CartItem from "./CartItem";
 
 function Cart() {
   const cartCtx = useContext(CartContext);
@@ -12,14 +13,27 @@ function Cart() {
     0
   );
 
+  function handleCheckout() {
+    progressCtx.showCheckout();
+  }
+
   return (
-    <Modal isOpen={progressCtx.progress === "cart"} className="cart">
+    <Modal
+      isOpen={progressCtx.progress === "cart"}
+      className="cart"
+      onClose={progressCtx.progress === "cart" ? progressCtx.hideCart : null} // Allow closing only when cart is open
+    >
       <h2>Your Shopping Cart</h2>
       <ul>
         {cartCtx.items.map((item) => (
-          <li key={item.id}>
-            {item.name} - ${item.price}
-          </li>
+          <CartItem
+            key={item.id}
+            name={item.name}
+            quantity={item.quantity}
+            price={item.price}
+            onIncrease={() => cartCtx.addItem(item)}
+            onDecrease={() => cartCtx.removeItem(item.id)}
+          />
         ))}
       </ul>
       <p className="cart-total">Total Amount: ${totalItemsPrice.toFixed(2)}</p>
@@ -27,7 +41,9 @@ function Cart() {
         <Button textOnly onClick={progressCtx.hideCart}>
           Close
         </Button>
-        <Button onClick={progressCtx.showCheckout}>Go to checkout</Button>
+        {cartCtx.items.length > 0 && (
+          <Button onClick={progressCtx.showCheckout}>Go to checkout</Button>
+        )}
       </p>
     </Modal>
   );
