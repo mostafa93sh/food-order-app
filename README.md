@@ -122,10 +122,4 @@ npm run build
 
 Output will be generated in the `dist/` directory.
 
-## License
-
-ISC
-
----
-
-**Questions?** Open an issue or contact the development team.
+**Questions?** Open an issue or contact me via email .
